@@ -1,0 +1,82 @@
+﻿@page
+@model AdminPanel.Pages.Books.IndexModel
+
+@{
+    ViewData["Title"] = "Books";
+}
+
+<h1>Books</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+
+<form>
+    <p>
+        Поиск: <input type="text" asp-for="SearchString" />
+        <input type="submit" value="Filter" />
+    </p>
+</form>
+
+<div class="table-responsive">
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Book[0].Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Book[0].Author)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Book[0].Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Book[0].CountPages)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Book[0].Genres)
+            </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Book[0].Picture)
+                </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Book) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Author)
+            </td>
+                <td style="word-break: break-all">
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CountPages)
+            </td>
+            <td>
+                        @if (item.Genres != null)
+                        {
+                            @foreach (var genrItem in item.Genres)
+                            {
+                                @Html.DisplayFor(modelItem => genrItem.Name)
+                                <h2> </h2>
+                            }
+                        }
+            </td>
+                    <td>
+                        <img src ="@item.Picture" alt="Err" width="100" height="150"/>
+                    </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> 
+                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+</div>
